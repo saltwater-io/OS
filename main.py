@@ -1,4 +1,6 @@
 import os
+import random
+
 from anytree import NodeMixin
 from _collections import deque
 
@@ -37,12 +39,47 @@ class Stack:
         return len(self.items)
 
 
-
-
 def main():
+
+    pQueue = deque()
+    sortedQueue = deque()
+    queue = deque()
+    stack = Stack()
+    data1 = getRandom()
+    data2 = getRandom()
+    data3 = getRandom()
+    data4 = getRandom()
+    dataDiff = []
+    for i in range(100):
+            dataDiff.append(random.randint(1, 3))
+    dataDiff = sorted(dataDiff)
+    for data in dataDiff:
+        pQueue.append(data)
+    pQueue.reverse()
+
+    print("Priority: ")
+    printValues(pQueue)
+
+    print("Sorted: ")
+    printValues(sorted())
     pass
 
+def printValues(queue):
+    printout = ''
+    while queue:
+        printout = printout + " " + queue.popleft()
+    print(printout)
 
+
+def getRandom():
+    data = []
+    for i in range (100):
+            data.append(random.randint(0, 100))
+    return data
+
+def appendValues():
+    pass
+def pushValues():
+    pass
 if __name__ == "__main__":
     main()
-    pass
