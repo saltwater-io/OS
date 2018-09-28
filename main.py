@@ -1,6 +1,6 @@
 import os
 import random
-
+from queue import PriorityQueue
 from anytree import NodeMixin
 from _collections import deque
 
@@ -40,34 +40,41 @@ class Stack:
 
 
 def main():
-
-    pQueue = deque()
+    pQueue = PriorityQueue()
     sortedQueue = deque()
-    queue = deque()
-    stack = Stack()
+    FIFO = deque()
+    LIFO = Stack()
     data1 = getRandom()
     data2 = getRandom()
     data3 = getRandom()
     data4 = getRandom()
     dataDiff = []
     for i in range(100):
-            dataDiff.append(random.randint(1, 3))
-    dataDiff = sorted(dataDiff)
-    for data in dataDiff:
-        pQueue.append(data)
-    pQueue.reverse()
+        dataDiff.append(random.randint(1, 3))
+        sortedQueue.append(data1[i])
+        FIFO.append(data2[i])
+        LIFO.push(data3[i])
 
-    print("Priority: ")
-    printValues(pQueue)
+    for data in dataDiff:
+        pQueue.put(data)
+    # print("Priority: ")
+    # printPriorityValues(pQueue)
 
     print("Sorted: ")
-    printValues(sorted())
-    pass
+    sortedQueue = sorted(sortedQueue)
+    printValues(sortedQueue)
+    print("FIFO Queue: ")
+    printValues(FIFO)
+    print("LIFO Queue: ")
+    printStackValues(FIFO)
+    i = 0
+    while i < 100:
+        pass
 
 def printValues(queue):
     printout = ''
     while queue:
-        printout = printout + " " + queue.popleft()
+        printout = printout + " " + str(queue.pop())
     print(printout)
 
 
@@ -77,9 +84,24 @@ def getRandom():
             data.append(random.randint(0, 100))
     return data
 
-def appendValues():
-    pass
-def pushValues():
-    pass
+def printPriorityValues(pQueue):
+    printout = ''
+    while pQueue.not_empty:
+        printout = printout + " " + str(pQueue.get())
+    print(printout)
+
+def printStackValues(stack):
+    printout = ''
+    while stack:
+        printout = printout + " " + str(stack.pop())
+    print(printout)
+
+def sortQueue(queue):
+    return sorted(queue)
+
+def sortQueue(queue):
+    return sorted(queue)
+
 if __name__ == "__main__":
     main()
+    pass
