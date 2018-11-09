@@ -13,6 +13,7 @@ class LinkedList:
     # Constructor for empty Doubly Linked List
     def __init__(self):
         self.head = None
+        self.tail = None
 
     # Given a reference to the head of a list and an
     # integer, inserts a new node on the front of list
@@ -70,7 +71,7 @@ class LinkedList:
         new_node.prev = last
         return
 
-    def insert_after(self, prev_node, new_data):
+    def insert_after(self, prev_node, new_node):
 
         # 1. check if the given prev_node is NULL
         if prev_node is None:
@@ -78,7 +79,6 @@ class LinkedList:
             return
 
         # 2. allocate node  & 3. put in the data
-        new_node = Node(data=new_data)
 
         # 4. Make next of new node as next of prev_node
         new_node.next = prev_node.next
@@ -94,22 +94,43 @@ class LinkedList:
             new_node.next.prev = new_node
 
     def add_sorted(self, s_data):
-        new_node = Node(s_data)
+        new_node = Node(data=s_data)
 
-        if self.head is None:
-            self.push(new_node)
+        if not self.head:
             self.head = new_node
+        elif self.head and not self.tail:
+            if new_node.data > self.head.data:
+                self.tail = self.head
+                self.head = new_node
+                self.head.next = self.tail
+                self.tail.prev = self.head
+            else:
+                self.head.next = new_node
+                self.tail = new_node
+                self.tail.prev = self.head
         else:
             last = self.head
-            while last.data < s_data and last.next:
+            while last.data > new_node.data and last.next:
                 last = last.next
-                pass
             self.insert_after(last, new_node)
-        pass
 
     def pop(self):
+        if not self.head:
+            print("List empty")
+            return False
         dead_boi = self.head
-        self.head = self.head.next
+        if self.head.next:
+            self.head = self.head.next
         self.head.prev = None
-        return dead_boi
-        pass
+        return dead_boi.data
+
+    def pop_tail(self):
+        if not self.tail:
+            print("Tail not found! ")
+            return
+        dead_boi = self.tail
+        if self.tail.prev:
+            self.tail = self.tail.prev
+        else:
+            self.tail = None
+        return dead_boi.data
