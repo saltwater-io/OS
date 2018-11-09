@@ -1,7 +1,4 @@
-import os
 import random
-from queue import PriorityQueue
-from anytree import NodeMixin
 from _collections import deque
 from src import linkedList
 
@@ -31,11 +28,11 @@ class Stack:
 
 
 def main():
-    output_first = open("src\\output\\FIRST.txt", 'w')
-    output_fifo = open("src\\output\\FIFO.txt", 'w')
-    output_lifo = open("src\\output\\LIFO.txt", 'w')
-    output_sorted = open("src\\output\\SORTED.txt", 'w')
-    output_prority = open("src\\output\\PRIORITY.txt", 'w')
+    output_first = open("FIRST.txt", 'w')
+    output_fifo = open("FIFO.txt", 'w')
+    output_lifo = open("LIFO.txt", 'w')
+    output_sorted = open("SORTED.txt", 'w')
+    output_prority = open("PRIORITY.txt", 'w')
 
     output_data1 = []
     output_data2 = []
@@ -47,108 +44,173 @@ def main():
     FIFO = deque()
     LIFO = Stack()
 
-    input1 = 0
-    input2 = 0
-    input3 = 0
-    input4 = 0
-
-    output1 = 0
-    output2 = 0
-    output3 = 0
-    output4 = 0
 
     clock_in = 0
     clock_out = 0
-    # iclock_two = 0
-    # oclock_two = 0
-    # iclock_three = 0
-    # oclock_three = 0
-    # iclock_three = 0
-    # oclock_three = 0
-    # iclock_four = 0
-    # oclock_four = 0
 
-    data1 = getRandom(100)
-    data2 = getRandom(100)
-    data3 = getRandom(100)
-    data4 = getRandom(3)
+    data0 = getRandom(0, 99)
+    data1 = getRandom(0, 99)
+    data2 = getRandom(0, 99)
+    data3 = getRandom(0, 99)
+    data4 = getRandom(1, 3)
 
-    for i in range(10):
-        FIFO.append(data2[i])
+    format_data("First input data: ", data0, output_first)
+    output_first.write("\n")
+
+    format_data('FIFO input data: ', data1, output_fifo)
+    output_fifo.write("\n")
+
+    format_data('LIFO input data: ', data2, output_lifo)
+    output_lifo.write("\n")
+
+    format_data('Sorted input data: ', data3, output_sorted)
+    output_sorted.write("\n")
+
+    format_data('Priority input data: ', data4, output_prority)
+    output_prority.write("\n")
+
+    for i in range(9):
+        input1 = data1[i]
+
+        FIFO.append(input1)
+        clock_in += 1
+        input1 = data2[i]
+        LIFO.push(input1)
+        clock_in += 1
+        input1 = data3[i]
+        priority_queue.add_sorted(input1)
+        clock_in += 1
+        input1 = data4[i]
+        sorted_queue.add_sorted(input1)
         clock_in += 1
 
     for i in range(10, 100):
-        iclock_one = data1[i]
-        output_data1.__add__(FIFO.popleft())
+        output1 = FIFO.popleft()
+        output_data1.append(output1)
         clock_out += 1
 
-        FIFO.append(iclock_one)
+        output1 = LIFO.pop()
+        output_data2.append(output1)
+        clock_out += 1
+
+        output1 = sorted_queue.pop()
+        output_data3.append(output1)
+        clock_out += 1
+
+        output1 = priority_queue.pop_tail()
+        output_data4.append(output1)
+        clock_out += 1
+
+        input1 = data1[i]
+        FIFO.append(input1)
+        clock_in += 1
+        input1 = data2[i]
+        LIFO.push(input1)
         clock_in += 1
 
-    for i in range(1, 10):
-        output_data1.__add__(FIFO.popleft())
+        input1 = data3[i]
+        sorted_queue.add_sorted(input1)
+        clock_in += 1
+        input1 = data4[i]
+        priority_queue.add_sorted(input1)
+        clock_in += 1
+
+    for i in range(9):
+        output1 = FIFO.popleft()
+        output_data1.append(output1)
         clock_out += 1
 
+        output1 = LIFO.pop()
+        output_data2.append(output1)
+        clock_out += 1
+
+        output1 = sorted_queue.pop()
+        output_data3.append(output1)
+        clock_out += 1
+
+        output1 = priority_queue.pop_tail()
+        output_data4.append(output1)
+        clock_out += 1
+
+ # TODO: START FIX HERE MAKE SURE 1x4x1 above works and prints
+
     print(str(clock_in) + " in " + str(clock_out) + " out")
-    format_data('One Register: ', output_data1, output_first)
+    format_data('One Register output: ', output_data1, output_first)
 
     output_data1.clear()
     clock_in = 0
     clock_out = 0
 
     for i in range(10):
-        priority_queue.append(data4[i])
-        sorted_queue.add_sorted(data1[i])
-        FIFO.append(data2[i])
-        LIFO.push(data3[i])
+        input1 = data1[i]
+        input2 = data2[i]
+        input3 = data3[i]
+        input4 = data4[i]
+
+        priority_queue.add_sorted(input4)
+        sorted_queue.add_sorted(input3)
+        FIFO.append(input1)
+        LIFO.push(input2)
+
         clock_in += 1
+    print(len(FIFO))
 
-    for i in range(10, 100):
-        iclock_one = data1[i]
-        iclock_two = data2[i]
-        iclock_three = data3[i]
-        iclock_four = data4[i]
+    for i in range(11, 100):
+        input1 = data1[i]
+        input2 = data2[i]
+        input3 = data3[i]
+        input4 = data4[i]
 
-        output_data1.__add__(FIFO.popleft())
-        output_data2.__add__(LIFO.pop())
-        output_data3.__add__(sorted_queue.pop())
-        output_data4.__add__(priority_queue.pop())
+        output1 = FIFO.popleft()
+        output2 = LIFO.pop()
+        output3 = sorted_queue.pop()
+        output4 = priority_queue.pop_tail()
         clock_out += 1
 
-        FIFO.append(iclock_one)
-        LIFO.push(iclock_two)
-        sorted_queue.add_sorted(iclock_three)
-        priority_queue.add_sorted(iclock_four)
-        clock_in += 1
+        output_data1.append(output1)
+        output_data2.append(output2)
+        output_data3.append(output3)
+        output_data4.append(output4)
 
-    for j in range(10):
-        output_data1.__add__(FIFO.popleft())
-        output_data2.__add__(LIFO.pop())
-        output_data3.__add__(sorted_queue.pop())
-        output_data4.__add__(priority_queue.pop())
+        FIFO.append(input1)
+        LIFO.push(input2)
+        sorted_queue.add_sorted(input3)
+        priority_queue.add_sorted(input4)
+        clock_in += 1
+    print(len())
+    for j in range(9):
+        output1 = FIFO.popleft()
+        output2 = LIFO.pop()
+        output3 = sorted_queue.pop()
+        output4 = priority_queue.pop_tail()
+
+        output_data1.append(output1)
+        output_data2.append(output2)
+        output_data3.append(output3)
+        output_data4.append(output4)
         clock_out += 1
 
     print(str(clock_in) + " in " + str(clock_out) + " out")
 
-    format_data('FIFO: ', output_data1, output_fifo)
-    output_fifo.write(str(clock_in) + " in " + str(clock_out) + " out")
+    format_data('FIFO output data: ', output_data1, output_fifo)
+    output_fifo.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
-    format_data('LIFO: ', output_data2, output_lifo)
-    output_lifo.write(str(clock_in) + " in " + str(clock_out) + " out")
+    format_data('LIFO: output data:  ', output_data2, output_lifo)
+    output_lifo.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
-    format_data('Sorted: ', output_data1, output_sorted)
-    output_sorted.write(str(clock_in) + " in " + str(clock_out) + " out")
+    format_data('Sorted output data: ', output_data3, output_sorted)
+    output_sorted.write("\n"+str(clock_in) + " in " + str(clock_out) + " out")
 
-    format_data('Priority: ', output_data2, output_prority)
-    output_prority.write(str(clock_in) + " in " + str(clock_out) + " out")
+    format_data('Priority output data: ', output_data4, output_prority)
 
+    output_prority.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
 
 def format_data(name, list, outputFile):
     output = name + "\n"
-    count = 0
+    count = 1
     for i in list:
-        if count % 9 == 0:
+        if count % 10 == 0:
             output = output + str(i) + " \n"
         else:
             output = output + str(i) + " "
@@ -156,14 +218,11 @@ def format_data(name, list, outputFile):
     outputFile.write(output)
 
 
-def getRandom(limit):
+def getRandom(start, limit):
     data = []
     for i in range(100):
-        data.append(random.randint(0, limit))
+        data.append(random.randint(start, limit))
     return data
-
-
-
 
 
 if __name__ == "__main__":
