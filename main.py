@@ -28,8 +28,8 @@ class Stack:
 
 
 def main():
-    output_first = open("FIRST.txt", 'w')
-    output_fifo = open("FIFO.txt", 'w')
+    ONE_REGISTER_OUTPUT = open("ONE_REG.txt", 'w')
+    FOUR_REGISTER_OUTPUT = open("FOUR_REG.txt", 'w')
     output_lifo = open("LIFO.txt", 'w')
     output_sorted = open("SORTED.txt", 'w')
     output_prority = open("PRIORITY.txt", 'w')
@@ -54,20 +54,20 @@ def main():
     data3 = getRandom(0, 99)
     data4 = getRandom(1, 3)
 
-    format_data("First input data: ", data0, output_first)
-    output_first.write("\n")
+    # format_data("First input data: ", data0, ONE_REGISTER_OUTPUT)
+    # ONE_REGISTER_OUTPUT.write("\n")
 
-    format_data('FIFO input data: ', data1, output_fifo)
-    output_fifo.write("\n")
+    format_data('FIFO input data: ', data1, ONE_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
 
-    format_data('LIFO input data: ', data2, output_lifo)
-    output_lifo.write("\n")
+    format_data('LIFO input data: ', data2, ONE_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
 
-    format_data('Sorted input data: ', data3, output_sorted)
-    output_sorted.write("\n")
+    format_data('Sorted input data: ', data3, ONE_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
 
-    format_data('Priority input data: ', data4, output_prority)
-    output_prority.write("\n")
+    format_data('Priority input data: ', data4, ONE_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
 
     for i in range(9):
         input1 = data1[i]
@@ -135,11 +135,23 @@ def main():
  # TODO: START FIX HERE MAKE SURE 1x4x1 above works and prints
 
     print(str(clock_in) + " in " + str(clock_out) + " out")
-    format_data('One Register output: ', output_data1, output_first)
+    format_data('One Register output: ', output_data1, ONE_REGISTER_OUTPUT)
 
     output_data1.clear()
     clock_in = 0
     clock_out = 0
+
+    format_data('FIFO input data: ', data1, FOUR_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
+
+    format_data('LIFO input data: ', data2, FOUR_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
+
+    format_data('Sorted input data: ', data3, FOUR_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
+
+    format_data('Priority input data: ', data4, FOUR_REGISTER_OUTPUT)
+    ONE_REGISTER_OUTPUT.write("\n")
 
     for i in range(10):
         input1 = data1[i]
@@ -177,7 +189,7 @@ def main():
         sorted_queue.add_sorted(input3)
         priority_queue.add_sorted(input4)
         clock_in += 1
-    print(len())
+    print(len(FIFO))
     for j in range(9):
         output1 = FIFO.popleft()
         output2 = LIFO.pop()
@@ -192,8 +204,8 @@ def main():
 
     print(str(clock_in) + " in " + str(clock_out) + " out")
 
-    format_data('FIFO output data: ', output_data1, output_fifo)
-    output_fifo.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
+    format_data('FIFO output data: ', output_data1, FOUR_REGISTER_OUTPUT)
+    FOUR_REGISTER_OUTPUT.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
     format_data('LIFO: output data:  ', output_data2, output_lifo)
     output_lifo.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
