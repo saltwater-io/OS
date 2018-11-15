@@ -1,3 +1,7 @@
+# This is a simulated operating systems project for CSC306 - Operating Systems
+# At The University of Southern Mississippi
+# Written by: Dakota McGuire 11/15/18
+#
 import random
 from _collections import deque
 from src import linkedList
@@ -6,7 +10,6 @@ import heapq as heap
 
 # Generic stack: code taken from http://interactivepython.org/courselib/static/pythonds/BasicDS/ImplementingaStackinPython.html
 # Im using this stack as opposed to the precompiled imported one because this code is much cleaner
-
 
 class Stack:
     def __init__(self):  # initial constructor
@@ -28,37 +31,40 @@ class Stack:
         return len(self.items)
 
 
+# Main method
 def main():
-    ONE_REGISTER_OUTPUT = open("ONE_REG.txt", 'w')
-    FOUR_REGISTER_OUTPUT = open("FOUR_REG.txt", 'w')
-    INTPUT_DATA = open("INPUT.txt", 'w')
-    ONE_TO_FOUR = open("ONE_TO_FOUR_REG.txt", 'w')
-    FOUR_TO_ONE = open("FOUR_TO_ONE_REG.txt", 'w')
 
+    # Files to output the data to
+    ONE_REGISTER_OUTPUT = open("ONE_REG.txt", 'w')  # One register
+    FOUR_REGISTER_OUTPUT = open("FOUR_REG.txt", 'w')  # 4 Registers
+    INTPUT_DATA = open("INPUT.txt", 'w')  # Input data used
+    ONE_TO_FOUR = open("ONE_TO_FOUR_REG.txt", 'w')  # One input register, 4 output registers
+    FOUR_TO_ONE = open("FOUR_TO_ONE_REG.txt", 'w')  # Four input registers, one output register
 
+    # Output data
     output_data1 = []
     output_data2 = []
     output_data3 = []
     output_data4 = []
 
+    # Queues to be populated and used
     priority_queue = []
     sorted_queue = linkedList.LinkedList()
     FIFO = deque()
     LIFO = Stack()
 
-
+    # Input and output registers
     clock_in = 0
     clock_out = 0
 
-    data_priority = getRandom(0, 99)
-    data_fifo = getRandom(0, 99)
-    data_lifo = getRandom(0, 99)
-    data_sorted = getRandom(0, 99)
-    priority_num = getRandom(1, 3)
+    # Data to be used - @ params low - high values
+    data_priority = get_random(0, 99)
+    data_fifo = get_random(0, 99)
+    data_lifo = get_random(0, 99)
+    data_sorted = get_random(0, 99)
+    priority_num = get_random(1, 3)
 
-    # format_data("First input data: ", data_priority, ONE_REGISTER_OUTPUT)
-    # ONE_REGISTER_OUTPUT.write("\n")
-
+#   Prints and formats input data to output file
     format_data('FIFO input data: ', data_fifo, INTPUT_DATA)
     INTPUT_DATA.write("\n")
     INTPUT_DATA.write("\n")
@@ -78,79 +84,90 @@ def main():
 
     # One register input - One register output
     for i in range(9):
-
+        # Adds to queue
         input1 = data_fifo[i]
         FIFO.append(input1)
         clock_in += 1
 
+        # Adds to stack
         input1 = data_lifo[i]
         LIFO.push(input1)
         clock_in += 1
 
+        # Adds to Sorted Queue
         input1 = data_sorted[i]
         sorted_queue.add_sorted(input1)
         clock_in += 1
 
+        # Adds to Priority queue
         input1 = data_priority[i]
         heap.heappush(priority_queue, (priority_num[i], count, input1))
         count += 1
         clock_in += 1
 
     for i in range(9, 100):
+        # FIFO output
         output1 = FIFO.popleft()
         output_data1.append(output1)
         clock_out += 1
 
+        # LIFO output
         output1 = LIFO.pop()
         output_data2.append(output1)
         clock_out += 1
 
+        # Sorted output
         output1 = sorted_queue.pop()
         output_data3.append(output1)
         clock_out += 1
 
+        # Priority Output
         output1 = heap.heappop(priority_queue)[2]
         output_data4.append(output1)
         clock_out += 1
 
+        # FIFO input
         input1 = data_fifo[i]
         FIFO.append(input1)
         clock_in += 1
 
+        # LIFO input
         input1 = data_lifo[i]
         LIFO.push(input1)
         clock_in += 1
 
+        # Sorted input
         input1 = data_sorted[i]
         sorted_queue.add_sorted(input1)
         clock_in += 1
 
+        # Priority Input
         input1 = data_priority[i]
         heap.heappush(priority_queue, (priority_num[i], count, input1))
         count += 1
         clock_in += 1
 
-
-    print()
-
     for i in range(9):
+        # FIFO output
         output1 = FIFO.popleft()
         output_data1.append(output1)
         clock_out += 1
 
+        # LIFO output
         output1 = LIFO.pop()
         output_data2.append(output1)
         clock_out += 1
 
+        # Sorted output
         output1 = sorted_queue.pop()
         output_data3.append(output1)
         clock_out += 1
 
+        # Priority output
         output1 = heap.heappop(priority_queue)[2]
         output_data4.append(output1)
         clock_out += 1
 
- # TODO: START FIX HERE MAKE SURE 1x4x1 above works and prints
 
     print(str(clock_in) + " in " + str(clock_out) + " out")
     format_data('FIFO Output Data: ', output_data1, ONE_REGISTER_OUTPUT)
@@ -169,6 +186,7 @@ def main():
     ONE_REGISTER_OUTPUT.write("\n")
     ONE_REGISTER_OUTPUT.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
+    # Clearing output data for next run
     output_data1.clear()
     output_data2.clear()
     output_data3.clear()
@@ -184,31 +202,36 @@ def main():
         input2 = data_lifo[i]
         input3 = data_sorted[i]
         input4 = data_priority[i]
-
+        # FIFO input
         FIFO.append(input1)
         LIFO.push(input2)
         sorted_queue.add_sorted(input3)
+        # Priority Input
         heap.heappush(priority_queue, (priority_num[i], count, input4))
         count += 1
         clock_in += 1
 
     for i in range(9, 100):
+        # Register inputs
         input1 = data_fifo[i]
         input2 = data_lifo[i]
         input3 = data_sorted[i]
         input4 = data_priority[i]
 
+        # FIFO, LIFO, sorted, and priority output to output registers
         output1 = FIFO.popleft()
         output2 = LIFO.pop()
         output3 = sorted_queue.pop()
         output4 = heap.heappop(priority_queue)[2]
         clock_out += 1
 
+        # Stores output data from register
         output_data1.append(output1)
         output_data2.append(output2)
         output_data3.append(output3)
         output_data4.append(output4)
 
+        # FIFO, LIFO, sorted, and priority input from input registers
         FIFO.append(input1)
         LIFO.push(input2)
         sorted_queue.add_sorted(input3)
@@ -217,11 +240,13 @@ def main():
         clock_in += 1
 
     for j in range(9):
+        # FIFO, LIFO, sorted, and priority output to output registers
         output1 = FIFO.popleft()
         output2 = LIFO.pop()
         output3 = sorted_queue.pop()
         output4 = heap.heappop(priority_queue)[2]
 
+        # Stores output data from register
         output_data1.append(output1)
         output_data2.append(output2)
         output_data3.append(output3)
@@ -248,6 +273,7 @@ def main():
 
     FOUR_REGISTER_OUTPUT.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
+    # Clearing output data for next run
     output_data1.clear()
     output_data2.clear()
     output_data3.clear()
@@ -257,62 +283,72 @@ def main():
     clock_out = 0
     count = 0
 
-#    1 Reg input, 4 reg output
+#   One input register, 4 output registers
     for i in range(9):
-
+        #FIFO input
         input1 = data_fifo[i]
         FIFO.append(input1)
         clock_in += 1
 
+        # LIFO input
         input1 = data_lifo[i]
         LIFO.push(input1)
         clock_in += 1
 
+        # Sorted input
         input1 = data_sorted[i]
         sorted_queue.add_sorted(input1)
         clock_in += 1
 
+        # Priority Input
         input1 = data_priority[i]
         heap.heappush(priority_queue, (priority_num[i], count, input1))
         count += 1
         clock_in += 1
 
     for i in range(9, 100):
-
+        # FIFO, LIFO, sorted, and priority output to output registers
         output1 = FIFO.popleft()
         output2 = LIFO.pop()
         output3 = sorted_queue.pop()
         output4 = heap.heappop(priority_queue)[2]
 
+        # Stores output data from register
         output_data1.append(output1)
         output_data2.append(output2)
         output_data3.append(output3)
         output_data4.append(output4)
         clock_out += 1
 
+        # FIFO input
         input1 = data_fifo[i]
         FIFO.append(input1)
         clock_in += 1
 
+        # LIFO input
         input1 = data_lifo[i]
         LIFO.push(input1)
         clock_in += 1
 
+        # Sorted input
         input1 = data_sorted[i]
         sorted_queue.add_sorted(input1)
         clock_in += 1
 
+        # Priority Input
         input1 = data_priority[i]
         heap.heappush(priority_queue, (priority_num[i], count, input1))
         count += 1
         clock_in += 1
 
     for i in range(9):
+        # FIFO, LIFO, sorted, and priority output to output registers
         output1 = FIFO.popleft()
         output2 = LIFO.pop()
         output3 = sorted_queue.pop()
         output4 = heap.heappop(priority_queue)[2]
 
+        # Stores output data from register
         output_data1.append(output1)
         output_data2.append(output2)
         output_data3.append(output3)
@@ -337,6 +373,7 @@ def main():
     ONE_TO_FOUR.write("\n")
     ONE_TO_FOUR.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
+    # Clears output data for next run
     output_data1.clear()
     output_data2.clear()
     output_data3.clear()
@@ -346,13 +383,15 @@ def main():
     clock_out = 0
     count = 0
 
-    # Four register Input to One register output
+    # Four Registers Input, One register output
     for i in range(9):
+        # Input registers
         input1 = data_fifo[i]
         input2 = data_lifo[i]
         input3 = data_sorted[i]
         input4 = data_priority[i]
 
+        # FIFO, LIFO, sorted, and priority input from input registers
         FIFO.append(input1)
         LIFO.push(input2)
         sorted_queue.add_sorted(input3)
@@ -361,27 +400,33 @@ def main():
         clock_in += 1
 
     for i in range(9, 100):
+        # FIFO output
         output1 = FIFO.popleft()
         output_data1.append(output1)
         clock_out += 1
 
+        # LIFO output
         output1 = LIFO.pop()
         output_data2.append(output1)
         clock_out += 1
 
+        # Sorted output
         output1 = sorted_queue.pop()
         output_data3.append(output1)
         clock_out += 1
 
+        # Priority output
         output1 = heap.heappop(priority_queue)[2]
         output_data4.append(output1)
         clock_out += 1
 
+        # Input registers
         input1 = data_fifo[i]
         input2 = data_lifo[i]
         input3 = data_sorted[i]
         input4 = data_priority[i]
 
+        # FIFO, LIFO, sorted, and priority input from input registers
         FIFO.append(input1)
         LIFO.push(input2)
         sorted_queue.add_sorted(input3)
@@ -390,18 +435,19 @@ def main():
         clock_in += 1
 
     for i in range(9):
+        # FIFO output
         output1 = FIFO.popleft()
         output_data1.append(output1)
         clock_out += 1
-
+        # LIFO output
         output1 = LIFO.pop()
         output_data2.append(output1)
         clock_out += 1
-
+        # Sorted output
         output1 = sorted_queue.pop()
         output_data3.append(output1)
         clock_out += 1
-
+        # Priority output
         output1 = heap.heappop(priority_queue)[2]
         output_data4.append(output1)
         clock_out += 1
@@ -425,6 +471,7 @@ def main():
     FOUR_TO_ONE.write("\n" + str(clock_in) + " in " + str(clock_out) + " out")
 
 
+# Formats data to 10x10 and prints to output files
 def format_data(name, list, output_file):
     output = name + "\n"
     count = 1
@@ -436,8 +483,8 @@ def format_data(name, list, output_file):
         count += 1
     output_file.write(output)
 
-
-def getRandom(start, limit):
+# Function returns a list of random data from specified parameters
+def get_random(start, limit):
     data = []
     for i in range(100):
         data.append(random.randint(start, limit))
