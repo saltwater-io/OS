@@ -91,7 +91,7 @@ def main():
         sorted_queue.add_sorted(input1)
         clock_in += 1
 
-        input1 = priority_num[i]
+        input1 = data_priority[i]
         heap.heappush(priority_queue, (priority_num[i], count, input1))
         count += 1
         clock_in += 1
@@ -272,7 +272,7 @@ def main():
         sorted_queue.add_sorted(input1)
         clock_in += 1
 
-        input1 = priority_num[i]
+        input1 = data_priority[i]
         heap.heappush(priority_queue, (priority_num[i], count, input1))
         count += 1
         clock_in += 1
