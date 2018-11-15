@@ -99,7 +99,7 @@ class LinkedList:
         if not self.head:
             self.head = new_node
         elif self.head and not self.tail:
-            if new_node.data > self.head.data:
+            if new_node.data > self.head.data:  # Data > head data
                 self.tail = self.head
                 self.head = new_node
                 self.head.next = self.tail
@@ -113,6 +113,28 @@ class LinkedList:
             while last.data > new_node.data and last.next:
                 last = last.next
             self.insert_after(last, new_node)
+
+
+    def add_priority(self, data):
+        new_node = Node(data=data)
+        if not self.tail:
+            self.tail = new_node
+        elif self.tail and not self.head:
+            if new_node.data >= self.tail.data:
+                self.head = new_node
+                self.head.next = self.tail
+                self.tail.prev = self.head
+            else:
+                self.head = self.tail
+                self.head.next = new_node
+                self.tail = new_node
+                self.tail.prev = self.head
+        else:
+            last = self.tail
+            while last.data < new_node.data:
+                last = last.prev
+            self.insert_after(last.next, new_node=new_node)
+
 
     def pop(self):
         if not self.head:
