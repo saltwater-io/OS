@@ -1,2 +1,2 @@
 # OS
-Simulated OS project 
+Simulated operating system in python
